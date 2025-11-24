@@ -23,45 +23,28 @@ CITY_ALIASES = {
     "крск": "Красноярск"
 }
 
-# --- РАСПИСАНИЕ ЕГЭ 2026 (ПО ТВОИМ ДАННЫМ) ---
+# --- РАСПИСАНИЕ ЕГЭ 2026 ---
 EXAM_DATES = {
     "История/Лит/Хим": "2026-06-01",
     "Русский язык": "2026-06-04",
     "Математика (Б/П)": "2026-06-08",
     "Общество/Физика": "2026-06-11",
     "Био/Гео/Ин.яз": "2026-06-15",
-    "Информатика (КЕГЭ)": "2026-06-18" 
-    # Информатика идет 18 и 19, считаем до первого дня
+    "Информатика (КЕГЭ)": "2026-06-18"
 }
 
-# --- СПРАВОЧНИКИ ---
 SUBJECTS_INFO = {
-    "🧮 Мат + ⚛️ Физ": "**ТЕХНАРЬ-КЛАССИКА:**\n• Строительство\n• Машиностроение\n• Нефтегазовое дело\n• Электроэнергетика\n• Авиастроение",
-    "🧮 Мат + 💻 Инф": "**IT-СФЕРА:**\n• Программная инженерия\n• Информационная безопасность\n• Системный анализ\n• Бизнес-информатика",
-    "🧬 Био + 🧪 Хим": "**МЕДИЦИНА:**\n• Лечебное дело / Педиатрия\n• Стоматология\n• Фармация\n• Ветеринария\n• Биотехнологии",
-    "📚 Общ + 🇬🇧 Инг": "**МЕНЕДЖМЕНТ:**\n• Логистика\n• Управление персоналом\n• Реклама и PR\n• Гостиничное дело",
-    "📚 Общ + 📜 Ист": "**ГУМАНИТАРИЙ:**\n• Юриспруденция\n• Политология\n• История\n• Социология"
+    "🧮 Мат + ⚛️ Физ": "**ТЕХНАРЬ-КЛАССИКА:**\n• Строительство\n• Машиностроение\n• Нефтегазовое дело\n• Электроэнергетика",
+    "🧮 Мат + 💻 Инф": "**IT-СФЕРА:**\n• Программная инженерия\n• Информационная безопасность\n• Системный анализ",
+    "🧬 Био + 🧪 Хим": "**МЕДИЦИНА:**\n• Лечебное дело\n• Стоматология\n• Фармация\n• Ветеринария",
+    "📚 Общ + 🇬🇧 Инг": "**МЕНЕДЖМЕНТ:**\n• Логистика\n• Управление персоналом\n• Реклама и PR",
+    "📚 Общ + 📜 Ист": "**ГУМАНИТАРИЙ:**\n• Юриспруденция\n• Политология\n• История"
 }
 
-DOCUMENTS_LIST = """
-📂 **СПИСОК ДОКУМЕНТОВ:**
-1. Паспорт (скан).
-2. Аттестат с приложением.
-3. СНИЛС.
-4. Фото 3х4 (4-6 шт.).
-5. Медсправка 086/у (для меда/педа).
-6. Документы о льготах.
-"""
+DOCUMENTS_LIST = "📂 **СПИСОК ДОКУМЕНТОВ:**\n1. Паспорт\n2. Аттестат\n3. СНИЛС\n4. Фото 3х4\n5. Медсправка 086/у"
+FAQ_TEXT = "❓ **ЧАСТЫЕ ВОПРОСЫ:**\n1️⃣ 5 вузов, 5 направлений.\n2️⃣ Зачисление по высшему приоритету.\n3️⃣ Оригинал до 3 августа.\n4️⃣ Одна волна зачисления."
 
-FAQ_TEXT = """
-❓ **ЧАСТЫЕ ВОПРОСЫ:**
-1️⃣ **Сколько вузов?** 5 вузов, до 5 направлений.
-2️⃣ **Приоритет?** Зачислят на высший по списку, куда проходишь.
-3️⃣ **Оригинал?** До 3 августа (12:00 МСК) в вуз зачисления.
-4️⃣ **Вторая волна?** Нет, только одна!
-"""
-
-# --- ЗАГРУЗКА БАЗЫ ---
+# --- ЗАГРУЗКА БАЗЫ (8 КОЛОНОК) ---
 def load_universities():
     db = {'tech': [], 'human': [], 'med': []}
     if not os.path.exists(DB_FILE): return db
@@ -69,91 +52,79 @@ def load_universities():
         with open(DB_FILE, 'r', encoding='utf-8-sig') as f:
             reader = csv.reader(f, delimiter=';')
             for row in reader:
-                if len(row) < 5: continue
+                if len(row) < 8: continue
+                # cat;name;city;major;score_bud;score_paid;price;url
                 cat = row[0].strip()
-                try: score = int(row[4].strip())
+                try:
+                    score_budget = int(row[4].strip())
+                    score_paid = int(row[5].strip())
+                    price = int(row[6].strip())
                 except: continue
+                
                 if cat in db:
-                    db[cat].append({'name': row[1].strip(), 'city': row[2].strip(), 'major': row[3].strip(), 'score': score})
-    except: pass
+                    db[cat].append({
+                        'name': row[1].strip(), 
+                        'city': row[2].strip(), 
+                        'major': row[3].strip(), 
+                        'budget': score_budget,
+                        'paid': score_paid,
+                        'price': price,
+                        'url': row[7].strip()
+                    })
+    except Exception as e: print(f"Error: {e}")
     return db
 
 universities_db = load_universities()
 
-# --- СОХРАНЕНИЕ СТАТИСТИКИ ---
 def save_to_csv(user_id, username, direction, city, score):
     try:
         exists = os.path.isfile(STATS_FILE)
         with open(STATS_FILE, 'a', newline='', encoding='utf-8-sig') as f:
             writer = csv.writer(f, delimiter=';')
             if not exists: writer.writerow(['ID', 'Ник', 'Время', 'Направление', 'Город', 'Баллы'])
-            uname = username if username else "Аноним"
-            t = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            writer.writerow([user_id, uname, t, direction, city, score])
+            writer.writerow([user_id, username, datetime.now().strftime("%Y-%m-%d %H:%M"), direction, city, score])
     except: pass
 
-# --- ГЛАВНОЕ МЕНЮ ---
 @bot.message_handler(commands=['start'])
 def start(message):
     global universities_db
     universities_db = load_universities()
-    
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.row("🚀 Найти вуз") 
-    markup.row("🎯 Куда с моими предметами?")
+    markup.row("🚀 Найти вуз", "🎯 Куда с моими предметами?") 
     markup.row("📂 Документы", "❓ Частые вопросы")
     markup.row("🏆 Доп. баллы", "📅 Даты и Сроки")
     markup.row("📄 Скачать памятку", "⏳ Таймер до ЕГЭ")
+    bot.send_message(message.chat.id, "👋 Привет! Я навигатор поступления.\nЯ знаю бюджетные и платные места.\n👇 Выбери раздел:", reply_markup=markup)
 
-    bot.send_message(message.chat.id, 
-                     "👋 Привет! Я твой навигатор поступления.\n"
-                     "👇 Выбери нужный раздел:", reply_markup=markup)
-
-# --- ОБРАБОТКА ТАЙМЕРА (ОБНОВЛЕНО) ---
+# --- ТАЙМЕР ---
 @bot.message_handler(func=lambda m: m.text == "⏳ Таймер до ЕГЭ")
 def timer_menu(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    # Кнопки перегруппированы под новое расписание
     markup.row("Русский язык", "Математика (Б/П)")
     markup.row("История/Лит/Хим", "Общество/Физика")
     markup.row("Био/Гео/Ин.яз", "Информатика (КЕГЭ)")
     markup.row("🔙 В меню")
-    
-    bot.send_message(message.chat.id, "⏰ Выбери свой предмет (Расписание 2026):", reply_markup=markup)
+    bot.send_message(message.chat.id, "⏰ Выбери предмет (2026):", reply_markup=markup)
 
 @bot.message_handler(func=lambda m: m.text in EXAM_DATES.keys())
 def show_timer(message):
     date_str = EXAM_DATES[message.text]
-    exam_date = datetime.strptime(date_str, "%Y-%m-%d")
-    now = datetime.now()
-    delta = exam_date - now
-    
-    subject = message.text
-    
-    if delta.days > 0:
-        bot.send_message(message.chat.id, 
-                         f"📅 Экзамен: **{subject}**\n"
-                         f"Дата: {date_str}\n\n"
-                         f"🔥 Осталось: **{delta.days} дней** 🔥\n"
-                         f"Удачи в подготовке!", 
-                         parse_mode="Markdown")
-    else:
-        bot.send_message(message.chat.id, f"Экзамен **{subject}** уже прошел!", parse_mode="Markdown")
+    days = (datetime.strptime(date_str, "%Y-%m-%d") - datetime.now()).days
+    msg = f"📅 **{message.text}**: {date_str}\n🔥 Осталось: **{days} дней**" if days > 0 else "Экзамен прошел!"
+    bot.send_message(message.chat.id, msg, parse_mode="Markdown")
 
-# --- ОБРАБОТКА ПРЕДМЕТОВ ---
+# --- ОБРАБОТЧИКИ ---
 @bot.message_handler(func=lambda m: m.text == "🎯 Куда с моими предметами?")
 def subjects_menu(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row("🧮 Мат + ⚛️ Физ", "🧮 Мат + 💻 Инф")
     markup.row("🧬 Био + 🧪 Хим", "📚 Общ + 🇬🇧 Инг")
     markup.row("📚 Общ + 📜 Ист", "🔙 В меню")
-    bot.send_message(message.chat.id, "Выбери свою комбинацию ЕГЭ:", reply_markup=markup)
+    bot.send_message(message.chat.id, "Выбери комбинацию:", reply_markup=markup)
 
 @bot.message_handler(func=lambda m: m.text in SUBJECTS_INFO.keys())
-def show_professions(message):
-    bot.send_message(message.chat.id, SUBJECTS_INFO[message.text], parse_mode="Markdown")
+def show_professions(message): bot.send_message(message.chat.id, SUBJECTS_INFO[message.text], parse_mode="Markdown")
 
-# --- СПРАВОЧНЫЕ КНОПКИ ---
 @bot.message_handler(func=lambda m: m.text == "📂 Документы")
 def show_docs(message): bot.send_message(message.chat.id, DOCUMENTS_LIST, parse_mode="Markdown")
 
@@ -161,14 +132,10 @@ def show_docs(message): bot.send_message(message.chat.id, DOCUMENTS_LIST, parse_
 def show_faq(message): bot.send_message(message.chat.id, FAQ_TEXT, parse_mode="Markdown")
 
 @bot.message_handler(func=lambda m: m.text == "🏆 Доп. баллы")
-def show_bonus(message):
-    text = "🏆 **ЗА ЧТО ДАЮТ ДОП. БАЛЛЫ?**\n🥇 Золотая медаль: +5-10 б.\n🏃 ГТО: +2-5 б.\n🤝 Волонтерство: +1-2 б.\n📝 Сочинение: до +10 б."
-    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+def show_bonus(message): bot.send_message(message.chat.id, "🏆 **БОНУСЫ:**\n🥇 Медаль: +5-10 б.\n🏃 ГТО: +2-5 б.\n🤝 Волонтерство: +1-2 б.\n📝 Сочинение: до +10 б.", parse_mode="Markdown")
 
 @bot.message_handler(func=lambda m: m.text == "📅 Даты и Сроки")
-def show_calendar(message):
-    text = "📅 **ГРАФИК 2026 (Проект):**\n🟢 20 июня: Старт приема.\n🟡 25 июля: Конец приема.\n🔴 27 июля: Списки.\n🟣 3-9 августа: Приказы."
-    bot.send_message(message.chat.id, text, parse_mode="Markdown")
+def show_calendar(message): bot.send_message(message.chat.id, "📅 **2026:**\n🟢 20 июня: Старт\n🟡 25 июля: Конец приема\n🟣 3-9 августа: Приказы", parse_mode="Markdown")
 
 @bot.message_handler(func=lambda m: m.text == "📄 Скачать памятку")
 def send_pamphlet(message):
@@ -176,7 +143,7 @@ def send_pamphlet(message):
         with open(PAMYATKA_FILE, 'rb') as f: bot.send_document(message.chat.id, f, caption="🎁 Твой гайд (PDF).")
     else: bot.send_message(message.chat.id, "Файл загружается...")
 
-# --- ПОИСК ВУЗА ---
+# --- ПОИСК ---
 @bot.message_handler(func=lambda m: m.text == "🚀 Найти вуз")
 def ask_dir(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -205,8 +172,7 @@ def check_city(message):
     if found:
         user_data[message.chat.id]['city'] = city_name
         bot.send_message(message.chat.id, f"✅ Город **{city_name}** найден.\nВведи баллы ЕГЭ:", parse_mode="Markdown")
-    else:
-        bot.send_message(message.chat.id, "В этом городе нет вузов по такому профилю.")
+    else: bot.send_message(message.chat.id, "В этом городе нет таких вузов.")
 
 @bot.message_handler(func=lambda m: m.text.isdigit())
 def result(message):
@@ -216,31 +182,42 @@ def result(message):
     save_to_csv(message.from_user.id, message.from_user.username, data['cat_name'], data['city'], score)
     
     unis = [u for u in universities_db[data['cat']] if u['city'] == data['city']]
-    unis.sort(key=lambda x: x['score'], reverse=True)
-    passed, dream = [], []
+    unis.sort(key=lambda x: x['budget'], reverse=True) # Сортируем по бюджетному баллу
+    
+    passed_budget = []
+    passed_paid = []
+    
     for u in unis:
-        if score >= u['score']: passed.append(u)
-        else: dream.append(u)
+        if score >= u['budget']:
+            passed_budget.append(u)
+        elif score >= u['paid']:
+            passed_paid.append(u)
             
     txt = f"📊 **Результат для г. {data['city']} ({score} б.):**\n\n"
-    if passed:
+    
+    if passed_budget:
         txt += "✅ **ПРОХОДИШЬ НА БЮДЖЕТ:**\n"
-        for u in passed: txt += f"🎓 **{u['name']}**\n   └ {u['major']}: от {u['score']} б.\n"
-    else: txt += "❌ На бюджет пока не хватает.\n"
-    if dream:
-        dream.sort(key=lambda x: x['score'])
-        txt += "\n⚠️ **РИСКОВАННЫЕ ВАРИАНТЫ:**\n"
-        for u in dream:
-            diff = u['score'] - score
-            txt += f"🔸 **{u['name']}** ({u['major']})\n   └ Не хватает: {diff} б.\n"
+        for u in passed_budget:
+            txt += f"🎓 **[{u['name']}]({u['url']})**\n   └ {u['major']}: от {u['budget']} б.\n"
+    else:
+        txt += "❌ На бюджет баллов пока не хватает.\n"
+        
+    if passed_paid:
+        txt += "\n💰 **ПРОХОДИШЬ НА ПЛАТНОЕ:**\n"
+        for u in passed_paid:
+            price_fmt = "{:,}".format(u['price']).replace(',', ' ')
+            diff = u['budget'] - score
+            txt += f"🔸 **[{u['name']}]({u['url']})**\n   └ {u['major']}: {u['paid']} б.\n   └ До бюджета: не хватило {diff} б.\n   └ Цена: **{price_fmt} ₽/год**\n"
+    elif not passed_budget:
+        txt += "\n😔 На платное тоже пока не хватает баллов."
             
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add("🚀 Найти вуз", "🔙 В меню")
-    bot.send_message(message.chat.id, txt, parse_mode="Markdown", reply_markup=markup)
+    bot.send_message(message.chat.id, txt, parse_mode="Markdown", reply_markup=markup, disable_web_page_preview=True)
     user_data.pop(message.chat.id, None)
 
 try:
-    print("Бот запущен (Режим 2026)...")
+    print("Бот запущен...")
     bot.polling(none_stop=True)
 except Exception as e:
     print(f"Ошибка: {e}")
