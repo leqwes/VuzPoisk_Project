@@ -7,7 +7,7 @@ import threading
 from datetime import datetime
 
 # ==========================================
-# 👇 НАСТРОЙКИ 👇
+# 👇 ТВОИ НАСТРОЙКИ 👇
 TOKEN = '8475081241:AAGRD7eLxKhyLnsu14fch9oq2LtZzVijbkE'
 ADMIN_ID = 5431881491
 # ==========================================
@@ -33,65 +33,68 @@ CITY_ALIASES = {
 }
 
 EXAM_DATES = {
-    "История": "2026-06-01", "Химия": "2026-06-01", "Литература": "2026-06-01",
+    "История/Лит/Хим": "2026-06-01",
     "Русский язык": "2026-06-04",
-    "Математика": "2026-06-08", "Математика (Профиль)": "2026-06-08",
-    "Обществознание": "2026-06-11", "Физика": "2026-06-11",
-    "Биология": "2026-06-15", "Ин.яз": "2026-06-15",
-    "Информатика": "2026-06-18"
+    "Математика (Б/П)": "2026-06-08",
+    "Общество/Физика": "2026-06-11",
+    "Био/Гео/Ин.яз": "2026-06-15",
+    "Информатика (КЕГЭ)": "2026-06-18"
 }
 
 SUBJECTS_INFO = {
-    "🧮 Мат + ⚛️ Физ": "**ТЕХНАРЬ:**\n🔹 Строительство\n🔹 Нефтегазовое дело\n🔹 Авиастроение\n🔹 Электроэнергетика",
-    "🧮 Мат + 💻 Инф": "**IT-СФЕРА:**\n🔹 Программная инженерия\n🔹 Информационная безопасность\n🔹 Аналитика данных",
-    "🧬 Био + 🧪 Хим": "**МЕДИЦИНА:**\n🔹 Лечебное дело\n🔹 Стоматология\n🔹 Фармация\n🔹 Ветеринария",
-    "📚 Общ + 🇬🇧 Инг": "**МЕНЕДЖМЕНТ:**\n🔹 Логистика\n🔹 Управление персоналом\n🔹 Реклама и PR",
-    "📚 Общ + 📜 Ист": "**ГУМАНИТАРИЙ:**\n🔹 Юриспруденция\n🔹 Политология\n🔹 История\n🔹 Педагогика"
+    "🧮 Мат + ⚛️ Физ": "**ТЕХНАРЬ:** Строительство, Нефтегаз, Авиастроение, Энергетика",
+    "🧮 Мат + 💻 Инф": "**IT:** Программирование, Безопасность, Аналитика, AI",
+    "🧬 Био + 🧪 Хим": "**МЕДИЦИНА:** Лечебное дело, Стоматология, Фармация, Ветеринария",
+    "📚 Общ + 🇬🇧 Инг": "**МЕНЕДЖМЕНТ:** Логистика, Управление, Реклама, Гостиничное дело",
+    "📚 Общ + 📜 Ист": "**ГУМАНИТАРИЙ:** Юриспруденция, Политология, История, Педагогика"
 }
 
-# --- КРАСИВЫЕ ТЕКСТОВЫЕ БЛОКИ ---
-
 TEXT_SPO = """
-🎓 **ПОСТУПЛЕНИЕ ПОСЛЕ СПО (КОЛЛЕДЖА)**
-───────────────
-Выпускники колледжей имеют особые права:
+🎓 **ПОСТУПЛЕНИЕ ПОСЛЕ КОЛЛЕДЖА (СПО)**
 
-1️⃣ **Без ЕГЭ:** Вы можете сдавать внутренние вступительные экзамены в вузе.
-2️⃣ **Бонусы:** Диплом с отличием часто дает **+5-10 баллов**.
-3️⃣ **Сроки:** Прием документов обычно заканчивается раньше (10-15 июля).
-"""
+1️⃣ **ЕГЭ не обязательно!**
+Выпускники колледжей имеют право сдавать **внутренние вступительные испытания** в вузе вместо ЕГЭ.
+*Но! Некоторые топ-вузы требуют только ЕГЭ.*
 
-TEXT_LGOTS = """
-🌟 **ЛЬГОТЫ И КВОТЫ**
-───────────────
-Кто поступает вне общего конкурса:
+2️⃣ **Что сдавать?**
+Внутренние экзамены обычно профильные.
+*Пример: вместо "Физики" будет "Электротехника".*
 
-🔹 **БВИ (Без испытаний):** Победители Всероса и перечневых олимпиад (при подтверждении ЕГЭ 75+).
-🔹 **Особая квота (10%):** Дети-инвалиды, сироты, ветераны боевых действий.
-🔹 **Отдельная квота (10%):** Герои РФ, участники СВО и их дети.
-"""
+3️⃣ **Сроки:**
+Прием документов для СПОшников часто заканчивается раньше (примерно 10-15 июля).
 
-TEXT_BONUS = """
-🏆 **КАК ПОЛУЧИТЬ +10 БАЛЛОВ?**
-───────────────
-Индивидуальные достижения решают всё!
-
-🥇 **Медаль:** +5-10 баллов (Золото/Серебро).
-🏃 **ГТО:** +2-5 баллов (Любой значок!).
-🤝 **Волонтерство:** +1-2 балла (Книжка волонтера).
-📝 **Итоговое сочинение:** до +10 баллов (ВШЭ, МГУ).
+4️⃣ **Бонусы:**
+Красный диплом колледжа может дать **+5-10 баллов**.
 """
 
 TEXT_DOCS = """
-📂 **СПИСОК ДОКУМЕНТОВ**
-───────────────
-Не забудь взять с собой:
+📂 **ДОКУМЕНТЫ ДЛЯ ПОСТУПЛЕНИЯ:**
 
-✅ **Паспорт** (скан разворота и прописки).
-✅ **Аттестат / Диплом** (с приложением!).
-✅ **СНИЛС** (обязательно).
-✅ **Фото 3х4** (матовые, 4-6 шт.).
-✅ **Медсправка 086/у** (Мед, Пед, Энергетика).
+1. **Паспорт** (разворот + прописка).
+2. **Аттестат/Диплом СПО** (с приложением!).
+3. **СНИЛС** (Обязательно).
+4. **Фото 3х4** (4-6 шт, матовые).
+5. **Медицинская справка 086/у** (нужна на: Мед, Пед, Энергетику, Транспорт).
+6. **Документы о льготах** (если есть).
+"""
+
+TEXT_BONUS = """
+🏆 **ИНДИВИДУАЛЬНЫЕ ДОСТИЖЕНИЯ (+10 БАЛЛОВ):**
+
+🥇 **Медаль (Золото/Серебро):** +3-10 баллов.
+🏃 **Значок ГТО:** Любой знак, если есть удостоверение (+2-5 баллов).
+🤝 **Волонтерство:** Книжка волонтера (+1-2 балла).
+📝 **Итоговое сочинение:** В ряде вузов (ВШЭ, МГУ) до +10 баллов.
+"""
+
+TEXT_LGOTS = """
+🌟 **ЛЬГОТЫ И КВОТЫ:**
+
+1️⃣ **БВИ (Без вступительных испытаний):** Победители олимпиад.
+2️⃣ **Особая квота (10%):** Инвалиды, сироты.
+3️⃣ **Отдельная квота (10%):** Участники СВО и их дети.
+
+*Для зачисления по квоте нужен подтверждающий документ!*
 """
 
 # --- ЗАГРУЗКА БАЗЫ ---
@@ -140,18 +143,19 @@ def toggle_subscription(user_id, subject):
     for row in subs:
         if len(row) < 2: continue
         if str(row[0]) == str(user_id) and row[1] == subject:
-            found = True
+            found = True # Удаляем подписку
         else:
             new_subs.append(row)
     
-    if not found: new_subs.append([user_id, subject])
+    if not found: new_subs.append([user_id, subject]) # Добавляем подписку
     
     with open(SUBS_FILE, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerows(new_subs)
-    return not found
+    
+    return not found # True = включено, False = выключено
 
-# --- ФОНОВЫЕ ПОТОКИ ---
+# --- ФОНОВЫЕ ЗАДАЧИ ---
 def notification_loop():
     while True:
         if datetime.now().strftime("%H:%M") == "09:00":
@@ -159,23 +163,22 @@ def notification_loop():
                 with open(SUBS_FILE, 'r', encoding='utf-8') as f:
                     for row in csv.reader(f):
                         try:
-                            for key, date_str in EXAM_DATES.items():
-                                if key in row[1]:
-                                    days = (datetime.strptime(date_str, "%Y-%m-%d") - datetime.now()).days
-                                    if days > 0:
-                                        bot.send_message(row[0], f"🔔 **Напоминание!**\nДо ЕГЭ ({row[1]}) осталось: **{days} дн.**", parse_mode="Markdown")
-                                    break
+                            if row[1] in EXAM_DATES:
+                                days = (datetime.strptime(EXAM_DATES[row[1]], "%Y-%m-%d") - datetime.now()).days
+                                if days > 0:
+                                    bot.send_message(row[0], f"🔔 Напоминание!\nДо ЕГЭ ({row[1]}) осталось: **{days} дн.**", parse_mode="Markdown")
                         except: pass
             time.sleep(61)
         time.sleep(30)
 
 def backup_loop():
     while True:
-        time.sleep(18000) # 5 часов
+        # 18000 секунд = 5 часов
+        time.sleep(18000)
         try:
             if os.path.exists(STATS_FILE):
                 with open(STATS_FILE, 'rb') as f:
-                    bot.send_document(ADMIN_ID, f, caption="💾 Авто-отчет базы", disable_notification=True)
+                    bot.send_document(ADMIN_ID, f, caption="💾 Авто-бэкап базы (5 часов)", disable_notification=True)
         except: pass
 
 t1 = threading.Thread(target=notification_loop)
@@ -187,144 +190,78 @@ t2.daemon = True
 t2.start()
 
 # =======================
-# 🤖 ГЛАВНОЕ МЕНЮ (СЕТКА)
+# 🤖 ГЛАВНОЕ МЕНЮ
 # =======================
 @bot.message_handler(commands=['start'])
 def start(message):
-    save_to_csv(message.from_user.id, message.from_user.username, "START", "Меню")
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    save_to_csv(message.from_user.id, message.from_user.username, "START", "Главное меню")
     
-    # 1 РЯД: Главное
+    global universities_db
+    universities_db = load_universities()
+    user_data[message.chat.id] = {'state': 'menu'}
+    
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row("🚀 Найти вуз", "🧠 Тест: Кто я?") 
-    # 2 РЯД: Инструменты
-    markup.row("🎯 По предметам", "⏳ Таймер")
-    # 3 РЯД: Справочник
-    markup.row("🎓 После СПО", "🌟 Льготы и Квоты")
-    markup.row("🏆 Доп. баллы", "📂 Документы")
-    # 4 РЯД: Сервис
-    markup.row("📄 Памятка", "📩 Обратная связь")
+    markup.row("🎯 По предметам", "🎓 После СПО")
+    markup.row("🏆 Доп. баллы", "🌟 Льготы и Квоты")
+    markup.row("📂 Документы", "📩 Обратная связь")
+    markup.row("📄 Памятка (PDF)", "⏳ Таймер")
 
-    welcome_text = (
-        f"👋 **Привет, {message.from_user.first_name}!**\n\n"
-        "Я — твой навигатор по поступлению в 2026 году.\n"
-        "Здесь нет воды, только факты, цифры и польза.\n\n"
-        "👇 **Выбери, с чего начнем:**"
-    )
-    bot.send_message(message.chat.id, welcome_text, reply_markup=markup, parse_mode="Markdown")
+    bot.send_message(message.chat.id, "👋 Привет! Я — навигатор абитуриента 2026.\nЯ знаю всё про поступление!\n👇 Выбери раздел:", reply_markup=markup)
 
 # =======================
-# 🚀 ПОИСК ВУЗОВ (ПОШАГОВЫЙ)
-# =======================
-@bot.message_handler(func=lambda m: m.text == "🚀 Найти вуз")
-def step1_cat(message):
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.row("Техническое 💻", "Гуманитарное ⚖️")
-    markup.row("Медицина 🧬", "🔙 В меню")
-    bot.send_message(message.chat.id, "1️⃣ Выбери направление:", reply_markup=markup)
-
-@bot.message_handler(func=lambda m: m.text in ["Техническое 💻", "Гуманитарное ⚖️", "Медицина 🧬"])
-def step2_city(message):
-    cat = "tech" if "Техническое" in message.text else "human" if "Гуманитарное" in message.text else "med"
-    user_data[message.chat.id] = {'cat': cat}
-    bot.send_message(message.chat.id, "2️⃣ Напиши город (например: Красноярск):", reply_markup=types.ReplyKeyboardRemove())
-    bot.register_next_step_handler(message, step3_score)
-
-def step3_score(message):
-    if message.text == "/start": start(message); return
-    if message.text == "🔙 В меню": start(message); return
-    
-    raw_city = message.text.lower().strip()
-    city = CITY_ALIASES.get(raw_city, raw_city)
-    
-    cat = user_data[message.chat.id].get('cat', 'tech')
-    found = False
-    for u in universities_db[cat]:
-        if u['city'].lower() == city.lower():
-            city = u['city']
-            found = True
-            break
-            
-    if not found:
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.row("🚀 Найти вуз", "🔙 В меню")
-        bot.send_message(message.chat.id, "😔 В этом городе нет вузов по выбранному профилю.\nПопробуй другой город.", reply_markup=markup)
-        return
-
-    user_data[message.chat.id]['city'] = city
-    bot.send_message(message.chat.id, f"✅ Город **{city}** найден.\n3️⃣ Введи сумму баллов ЕГЭ (3 предмета):", parse_mode="Markdown")
-    bot.register_next_step_handler(message, step4_result)
-
-def step4_result(message):
-    if not message.text.isdigit():
-        bot.send_message(message.chat.id, "⚠️ Нужно ввести число!")
-        return
-        
-    score = int(message.text)
-    data = user_data[message.chat.id]
-    save_to_csv(message.from_user.id, message.from_user.username, "SEARCH", f"{data['city']} {score}")
-    
-    unis = [u for u in universities_db[data['cat']] if u['city'] == data['city']]
-    unis.sort(key=lambda x: x['budget'], reverse=True)
-    
-    passed, paid = [], []
-    for u in unis:
-        if score >= u['budget']: passed.append(u)
-        elif score >= u['paid']: paid.append(u)
-            
-    txt = f"📊 **Результат для г. {data['city']} ({score} б.):**\n"
-    
-    if passed:
-        txt += "\n✅ **БЮДЖЕТ:**\n"
-        for u in passed: txt += f"🎓 **[{u['name']}]({u['url']})**\n   └ {u['major']}: от {u['budget']} б.\n"
-    else: txt += "\n❌ На бюджет не хватает.\n"
-    
-    if paid:
-        txt += "\n💰 **ПЛАТНОЕ:**\n"
-        for u in paid:
-            price_fmt = "{:,}".format(u['price']).replace(',', ' ')
-            txt += f"🔸 **[{u['name']}]({u['url']})** ({u['major']})\n   └ Цена: {price_fmt} ₽\n"
-
-    txt += "\n_Данные за 2024/2025 год_" # ПОДПИСЬ
-
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.row("🚀 Найти вуз", "🔙 В меню")
-    # disable_web_page_preview=True чтобы не было картинок ссылок
-    bot.send_message(message.chat.id, txt, parse_mode="Markdown", reply_markup=markup, disable_web_page_preview=True)
-
-# =======================
-# 🧠 ТЕСТ
+# 🧠 ТЕСТ "КТО Я?"
 # =======================
 @bot.message_handler(func=lambda m: m.text == "🧠 Тест: Кто я?")
 def quiz_start(message):
     save_to_csv(message.from_user.id, message.from_user.username, "QUIZ", "Начал тест")
     markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton("🧩 Логика", callback_data="q1_tech"),
-               types.InlineKeyboardButton("🗣 Общение", callback_data="q1_human"))
-    markup.add(types.InlineKeyboardButton("🎨 Творчество", callback_data="q1_art"),
-               types.InlineKeyboardButton("🔬 Природа", callback_data="q1_bio"))
+    markup.add(types.InlineKeyboardButton("🧩 Логика", callback_data="type_LOGIC"),
+               types.InlineKeyboardButton("🗣 Общение", callback_data="type_SOCIAL"))
+    markup.add(types.InlineKeyboardButton("🎨 Творчество", callback_data="type_CREATIVE"),
+               types.InlineKeyboardButton("🔬 Природа", callback_data="type_NATURE"))
+    
     bot.send_message(message.chat.id, "🧐 **Вопрос 1:** Что тебе ближе?", parse_mode="Markdown", reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda call: call.data.startswith('q1_'))
-def quiz_q2(call):
+@bot.callback_query_handler(func=lambda call: call.data.startswith('type_'))
+def quiz_step2(call):
     t = call.data.split('_')[1]
-    mk = types.InlineKeyboardMarkup()
-    if t == 'tech': mk.add(types.InlineKeyboardButton("💻 Код", callback_data="res_IT"), types.InlineKeyboardButton("⚙️ Механизмы", callback_data="res_ENG"))
-    elif t == 'human': mk.add(types.InlineKeyboardButton("⚖️ Право", callback_data="res_LAW"), types.InlineKeyboardButton("💰 Бизнес", callback_data="res_MAN"))
-    elif t == 'bio': mk.add(types.InlineKeyboardButton("🩺 Врач", callback_data="res_MED"), types.InlineKeyboardButton("🔬 Ученый", callback_data="res_SCI"))
-    elif t == 'art': mk.add(types.InlineKeyboardButton("🖌 Дизайн", callback_data="res_DES"), types.InlineKeyboardButton("🎭 Сцена", callback_data="res_ART"))
-    bot.edit_message_text("🤖 **Вопрос 2:** Выбери направление:", call.message.chat.id, call.message.message_id, reply_markup=mk)
+    markup = types.InlineKeyboardMarkup()
+    
+    if t == 'LOGIC':
+        markup.add(types.InlineKeyboardButton("💻 Код", callback_data="res_IT"), types.InlineKeyboardButton("🏗 Механизмы", callback_data="res_ENG"))
+    elif t == 'SOCIAL':
+        markup.add(types.InlineKeyboardButton("⚖️ Право", callback_data="res_LAW"), types.InlineKeyboardButton("💰 Управление", callback_data="res_MAN"))
+    elif t == 'CREATIVE':
+        markup.add(types.InlineKeyboardButton("🖌 Дизайн", callback_data="res_DES"), types.InlineKeyboardButton("🎭 Сцена", callback_data="res_ART"))
+    elif t == 'NATURE':
+        markup.add(types.InlineKeyboardButton("🩺 Врач", callback_data="res_MED"), types.InlineKeyboardButton("🌿 Ученый", callback_data="res_BIO"))
+        
+    bot.edit_message_text("🤖 **Вопрос 2:** Выбери направление:", call.message.chat.id, call.message.message_id, reply_markup=markup)
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('res_'))
-def quiz_res(call):
+def quiz_final(call):
     r = call.data.split('_')[1]
-    res_map = {'IT':'IT', 'ENG':'Инженерия', 'LAW':'Юриспруденция', 'MAN':'Менеджмент', 'MED':'Медицина', 'SCI':'Наука', 'DES':'Дизайн', 'ART':'Искусство'}
-    bot.edit_message_text(f"🔮 Твой путь: **{res_map.get(r)}**.\n\nЖми '🚀 Найти вуз' в меню!", call.message.chat.id, call.message.message_id, parse_mode="Markdown")
+    results = {
+        'IT': "💻 Твой путь — IT. Вузы: ИТМО, МИРЭА, ВШЭ.",
+        'ENG': "⚙️ Твой путь — Инженерия. Вузы: Бауманка, Политех.",
+        'LAW': "⚖️ Твой путь — Юриспруденция. Вузы: МГЮА, СПбГУ.",
+        'MAN': "💼 Твой путь — Менеджмент. Вузы: ВШЭ, РАНХиГС.",
+        'DES': "🎨 Твой путь — Дизайн. Вузы: Школа Дизайна, МАРХИ.",
+        'ART': "🎭 Твой путь — Искусство. Вузы: ГИТИС, ВГИК.",
+        'MED': "🩺 Твой путь — Медицина. Вузы: Сеченовский, Павлова.",
+        'BIO': "🔬 Твой путь — Наука. Вузы: МГУ, РХТУ."
+    }
+    
+    save_to_csv(call.message.chat.id, call.message.chat.username, "QUIZ_RES", r)
+    bot.edit_message_text(f"🔮 **Результат:**\n\n{results.get(r)}\n\n👇 *Жми 'Найти вуз' в меню!*", call.message.chat.id, call.message.message_id, parse_mode="Markdown")
 
 # =======================
-# ⏳ ТАЙМЕР
+# ⏳ ТАЙМЕР (ВКЛ/ВЫКЛ)
 # =======================
 @bot.message_handler(func=lambda m: m.text == "⏳ Таймер")
 def timer_menu(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "Таймер")
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row("Русский язык", "Математика (Б/П)")
     markup.row("История/Лит/Хим", "Общество/Физика")
@@ -344,27 +281,150 @@ def show_timer(message):
                 if len(row) >= 2 and str(row[0]) == str(message.chat.id) and row[1] == message.text:
                     is_sub = True; break
     
-    btn_text = "🔕 Выключить" if is_sub else "🔔 Включить уведомления"
+    btn_text = "🔕 Выключить уведомления" if is_sub else "🔔 Включить уведомления"
     mk = types.InlineKeyboardMarkup()
     mk.add(types.InlineKeyboardButton(btn_text, callback_data=f"toggle_{message.text}"))
     
-    bot.send_message(message.chat.id, f"📅 {message.text}\n🔥 Осталось: **{days} дней**", parse_mode="Markdown", reply_markup=mk)
+    bot.send_message(message.chat.id, f"📅 {message.text}: {date_str}\n🔥 Осталось: **{days} дней**", parse_mode="Markdown", reply_markup=mk)
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('toggle_'))
 def toggle_callback(call):
     subj = call.data.split('toggle_')[1]
     status = toggle_subscription(call.message.chat.id, subj)
-    new_text = "🔕 Выключить" if status else "🔔 Включить уведомления"
-    msg = "✅ Включено!" if status else "❌ Выключено."
+    
+    new_text = "🔕 Выключить уведомления" if status else "🔔 Включить уведомления"
+    msg_text = f"✅ Уведомления для **{subj}** включены!" if status else f"❌ Уведомления для **{subj}** выключены."
+    
     mk = types.InlineKeyboardMarkup()
     mk.add(types.InlineKeyboardButton(new_text, callback_data=f"toggle_{subj}"))
-    bot.edit_message_text(f"📅 {subj}\n\n👉 {msg}", call.message.chat.id, call.message.message_id, reply_markup=mk)
+    
+    bot.answer_callback_query(call.id, "Готово")
+    bot.edit_message_text(f"📅 {subj}\n\n👉 {msg_text}", call.message.chat.id, call.message.message_id, reply_markup=mk, parse_mode="Markdown")
 
 # =======================
-# ℹ️ ИНФО И АДМИНКА
+# ℹ️ ИНФО (ТЕПЕРЬ ВСЕ ЗАПИСЫВАЕТСЯ В БАЗУ)
 # =======================
+@bot.message_handler(func=lambda m: m.text == "🎓 После СПО")
+def show_spo(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "После СПО")
+    bot.send_message(message.chat.id, TEXT_SPO, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda m: m.text == "🌟 Льготы и Квоты")
+def show_lgots(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "Льготы")
+    bot.send_message(message.chat.id, TEXT_LGOTS, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda m: m.text == "🏆 Доп. баллы")
+def show_bonus(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "Доп. баллы")
+    bot.send_message(message.chat.id, TEXT_BONUS, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda m: m.text == "📂 Документы")
+def show_docs(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "Документы")
+    bot.send_message(message.chat.id, TEXT_DOCS, parse_mode="Markdown")
+
+@bot.message_handler(func=lambda m: m.text == "📩 Обратная связь")
+def feedback(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "Обратная связь")
+    msg = bot.send_message(message.chat.id, "✍️ Напиши сообщение админу:")
+    bot.register_next_step_handler(msg, lambda m: bot.send_message(ADMIN_ID, f"📩 {m.from_user.username}: {m.text}"))
+
+@bot.message_handler(func=lambda m: m.text == "📄 Памятка (PDF)")
+def send_pdf(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "DOWNLOAD", "Памятка")
+    if os.path.exists(PAMYATKA_FILE):
+        with open(PAMYATKA_FILE, 'rb') as f: bot.send_document(message.chat.id, f)
+    else: bot.send_message(message.chat.id, "Файл обновляется...")
+
+# =======================
+# 🚀 ПОИСК ВУЗОВ
+# =======================
+@bot.message_handler(func=lambda m: m.text == "🚀 Найти вуз")
+def ask_dir(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "Найти вуз")
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.add("Техническое 💻", "Гуманитарное ⚖️", "Медицина 🧬", "🔙 В меню")
+    bot.send_message(message.chat.id, "Выбери профиль:", reply_markup=markup)
+
+@bot.message_handler(func=lambda m: m.text == "🔙 В меню")
+def back(message): start(message)
+
+@bot.message_handler(func=lambda m: m.text in ["Техническое 💻", "Гуманитарное ⚖️", "Медицина 🧬"])
+def ask_city(message):
+    cat = "tech" if "Техническое" in message.text else "human" if "Гуманитарное" in message.text else "med"
+    user_data[message.chat.id] = {'cat': cat, 'cat_name': message.text}
+    bot.send_message(message.chat.id, "🏙 Город (например: Красноярск):", reply_markup=types.ReplyKeyboardRemove())
+
+@bot.message_handler(func=lambda m: not m.text.isdigit() and m.chat.id in user_data and 'city' not in user_data[m.chat.id] and user_data[m.chat.id].get('state') != 'menu')
+def check_city(message):
+    raw = message.text.lower().strip()
+    city_name = CITY_ALIASES.get(raw, raw)
+    cat = user_data[message.chat.id]['cat']
+    found = False
+    for u in universities_db[cat]:
+        if u['city'].lower() == city_name.lower():
+            city_name = u['city']; found = True; break
+    if found:
+        user_data[message.chat.id]['city'] = city_name
+        bot.send_message(message.chat.id, f"✅ Город **{city_name}** найден.\nВведи баллы ЕГЭ:", parse_mode="Markdown")
+    else: bot.send_message(message.chat.id, "В этом городе нет таких вузов.")
+
+@bot.message_handler(func=lambda m: m.text.isdigit())
+def result(message):
+    if message.chat.id not in user_data or 'city' not in user_data[message.chat.id]: start(message); return
+    score = int(message.text)
+    data = user_data[message.chat.id]
+    save_to_csv(message.from_user.id, message.from_user.username, f"SEARCH: {data['city']}", str(score))
+    
+    unis = [u for u in universities_db[data['cat']] if u['city'] == data['city']]
+    unis.sort(key=lambda x: x['budget'], reverse=True)
+    passed, paid = [], []
+    for u in unis:
+        if score >= u['budget']: passed.append(u)
+        elif score >= u['paid']: paid.append(u)
+            
+    txt = f"📊 **Результат для г. {data['city']} ({score} б.):**\n\n"
+    if passed:
+        txt += "✅ **ПРОХОДИШЬ НА БЮДЖЕТ:**\n"
+        for u in passed: txt += f"🎓 **[{u['name']}]({u['url']})**\n   └ {u['major']}: от {u['budget']} б.\n"
+    else: txt += "❌ На бюджет не хватает.\n"
+    if paid:
+        txt += "\n💰 **ПЛАТНОЕ / ЦЕЛЕВОЕ:**\n"
+        for u in paid:
+            price_fmt = "{:,}".format(u['price']).replace(',', ' ')
+            txt += f"🔸 **[{u['name']}]({u['url']})** ({u['major']})\n   └ Цена: {price_fmt} ₽\n"
+    
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.add("🚀 Найти вуз", "🔙 В меню")
+    bot.send_message(message.chat.id, txt, parse_mode="Markdown", reply_markup=markup, disable_web_page_preview=True)
+    user_data.pop(message.chat.id, None)
+
+# --- АДМИНКА ---
+@bot.message_handler(commands=['sendall'])
+def admin_send(message):
+    if message.from_user.id != ADMIN_ID: return
+    text = message.text.replace('/sendall', '').strip()
+    ids = set()
+    if os.path.exists(STATS_FILE):
+        with open(STATS_FILE, 'r', encoding='utf-8-sig') as f:
+            for row in csv.reader(f, delimiter=';'):
+                if len(row) > 0 and row[0].isdigit(): ids.add(row[0])
+    for uid in ids:
+        try: bot.send_message(uid, text)
+        except: pass
+    bot.send_message(message.chat.id, f"✅ Отправлено: {len(ids)}")
+
+@bot.message_handler(commands=['stats'])
+def admin_stats(message):
+    if message.from_user.id != ADMIN_ID: return
+    try:
+        with open(STATS_FILE, 'rb') as f: bot.send_document(message.chat.id, f, caption="📊 База пользователей")
+    except: bot.send_message(message.chat.id, "База пуста.")
+
 @bot.message_handler(func=lambda m: m.text == "🎯 По предметам")
 def sub_menu(message):
+    save_to_csv(message.from_user.id, message.from_user.username, "BUTTON", "По предметам")
     mk = types.ReplyKeyboardMarkup(resize_keyboard=True)
     mk.row("🧮 Мат + ⚛️ Физ", "🧮 Мат + 💻 Инф")
     mk.row("🧬 Био + 🧪 Хим", "📚 Общ + 🇬🇧 Инг")
@@ -373,51 +433,6 @@ def sub_menu(message):
 
 @bot.message_handler(func=lambda m: m.text in SUBJECTS_INFO.keys())
 def show_prof(message): bot.send_message(message.chat.id, SUBJECTS_INFO[message.text], parse_mode="Markdown")
-
-@bot.message_handler(func=lambda m: m.text == "🔙 В меню")
-def back(message): start(message)
-
-@bot.message_handler(func=lambda m: m.text == "🎓 После СПО")
-def info_spo(m): bot.send_message(m.chat.id, TEXT_SPO, parse_mode="Markdown")
-@bot.message_handler(func=lambda m: m.text == "🌟 Льготы и Квоты")
-def info_lgots(m): bot.send_message(m.chat.id, TEXT_LGOTS, parse_mode="Markdown")
-@bot.message_handler(func=lambda m: m.text == "🏆 Доп. баллы")
-def info_bonus(m): bot.send_message(m.chat.id, TEXT_BONUS, parse_mode="Markdown")
-@bot.message_handler(func=lambda m: m.text == "📂 Документы")
-def info_docs(m): bot.send_message(m.chat.id, TEXT_DOCS, parse_mode="Markdown")
-
-@bot.message_handler(func=lambda m: m.text == "📄 Памятка")
-def send_pdf(m):
-    save_to_csv(m.from_user.id, m.from_user.username, "DOWNLOAD", "Памятка")
-    if os.path.exists(PAMYATKA_FILE):
-        with open(PAMYATKA_FILE, 'rb') as f: bot.send_document(m.chat.id, f)
-    else: bot.send_message(m.chat.id, "Файл не найден.")
-
-@bot.message_handler(func=lambda m: m.text == "📩 Обратная связь")
-def feedback(m):
-    msg = bot.send_message(m.chat.id, "✍️ Напиши сообщение:")
-    bot.register_next_step_handler(msg, lambda mm: bot.send_message(ADMIN_ID, f"📩 {mm.from_user.username}: {mm.text}"))
-
-@bot.message_handler(commands=['sendall'])
-def admin_send(m):
-    if m.from_user.id != ADMIN_ID: return
-    txt = m.text.replace('/sendall', '').strip()
-    ids = set()
-    if os.path.exists(STATS_FILE):
-        with open(STATS_FILE, 'r', encoding='utf-8-sig') as f:
-            for r in csv.reader(f, delimiter=';'): 
-                if len(r)>0 and r[0].isdigit(): ids.add(r[0])
-    for uid in ids: 
-        try: bot.send_message(uid, txt)
-        except: pass
-    bot.send_message(m.chat.id, f"✅ Отправлено: {len(ids)}")
-
-@bot.message_handler(commands=['stats'])
-def admin_stats(m):
-    if m.from_user.id != ADMIN_ID: return
-    try: 
-        with open(STATS_FILE, 'rb') as f: bot.send_document(m.chat.id, f)
-    except: pass
 
 try:
     print("Бот запущен...")
